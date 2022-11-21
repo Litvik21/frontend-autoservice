@@ -1,0 +1,16 @@
+<h2>Cars</h2>
+
+<div>
+  <label>Car title:
+    <input #carBrand />
+    <input #carModel />
+    <input #carNumber />
+    <input #carYear />
+    <input #carOwner />
+  </label>
+  <!-- (click) passes input value to add() and then clears the input -->
+  <button (click)="add(carBrand.value, carModel.value, carYear.value, carNumber.value, carOwner.value);
+   carBrand.value=''; carBrand.value=''; carModel.value=''; carYear.value=''; carNumber.value=''; carOwner.value=''">
+    add
+  </button>
+</div>

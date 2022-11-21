@@ -1,0 +1,22 @@
+<h2>Orders</h2>
+
+<div>
+  <label>Order title:
+    <input #orderCar />
+    <input #orderDescription />
+    <input #orderDateReceived />
+    <input #orderTasks />
+    <input #orderProducts />
+    <input #orderStatus />
+    <input #orderTotalPrice />
+    <input #orderDateFinished />
+
+  </label>
+  <!-- (click) passes input value to add() and then clears the input -->
+  <button (click)="add(orderCar.valueOf(), orderDescription.value, orderDateReceived.valueAsDate, orderTasks.valueOf(),
+  orderProducts.valueOf(), orderStatus.value, orderTotalPrice.valueAsNumber, orderDateFinished.valueAsDate);
+   orderCar.valueOf(); orderDescription.value=''; orderDateReceived.valueAsDate; orderTasks.valueOf(); orderProducts.valueOf();
+orderStatus.type=''; orderTotalPrice.valueAsNumber; orderDateFinished.valueAsDate">
+    add
+  </button>
+</div>

@@ -1,0 +1,13 @@
+<h2>Car Owners</h2>
+
+<div>
+  <label>Car Owner title:
+    <input #carOwnerCars />
+    <input #carOwnerOrders />
+  </label>
+  <!-- (click) passes input value to add() and then clears the input -->
+  <button (click)="add(carOwnerCars.list, carOwnerOrders.value);
+   carOwnerCars.list[]=; carOwnerOrders.value='';">
+    add
+  </button>
+</div>

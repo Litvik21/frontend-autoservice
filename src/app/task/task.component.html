@@ -1,0 +1,16 @@
+<h2>Tasks</h2>
+
+<div>
+  <label>Task title:
+    <input #taskType />
+    <input #taskOrder />
+    <input #taskMechanic />
+    <input #taskPrice />
+    <input #taskPaymentStatus />
+  </label>
+  <!-- (click) passes input value to add() and then clears the input -->
+  <button (click)="add(taskType.type, taskOrder.value, taskMechanic<Mechanic>, taskPrice.valueAsNumber, taskPaymentStatus.type);
+   taskType.type=''; taskOrder.value=''; taskMechanic.value=''; taskPrice.value=''; taskPaymentStatus.type=''">
+    add
+  </button>
+</div>

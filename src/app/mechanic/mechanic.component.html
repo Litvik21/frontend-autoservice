@@ -1,0 +1,13 @@
+<h2>Mechanics</h2>
+
+<div>
+  <label>Mechanic title:
+    <input #mechanicName />
+    <input #mechanicFinishedOrders />
+  </label>
+  <!-- (click) passes input value to add() and then clears the input -->
+  <button (click)="add(mechanicName.value, mechanicFinishedOrders.value);
+   mechanicName.value=''; mechanicFinishedOrders.value=''">
+    add
+  </button>
+</div>
