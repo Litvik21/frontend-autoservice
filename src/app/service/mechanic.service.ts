@@ -4,8 +4,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
-import { Mechanic } from './mechanic';
+import { Mechanic } from '../model/mechanic';
 import { MessageService } from './message.service';
+import {Order} from "../model/order";
+import {Car} from "../model/car";
 
 @Injectable({ providedIn: 'root' })
 export class MechanicService {
@@ -28,12 +30,30 @@ export class MechanicService {
       );
   }
 
-  /** GET hero by id. Will 404 if id not found */
-  getMechanic(id: bigint): Observable<Mechanic> {
+  /** GET mechanic by id. Will 404 if id not found */
+  getMechanic(id: number): Observable<Mechanic> {
     const url = `${this.mechanicsUrl}/${id}`;
     return this.http.get<Mechanic>(url).pipe(
       tap(_ => this.log(`fetched mechanic id=${id}`)),
       catchError(this.handleError<Mechanic>(`getMechanic id=${id}`))
+    );
+  }
+
+  /** GET mechanic's finished orders by id. Will 404 if id not found */
+  getFinishedOrders(id: number): Observable<Order[]> {
+    const url = `${this.mechanicsUrl}/${id}/finished-orders`;
+    return this.http.get<Order[]>(url).pipe(
+      tap(_ => this.log(`fetched mechanic id=${id}`)),
+      catchError(this.handleError<Order[]>(`getMechanic id=${id}`))
+    );
+  }
+
+  /** GET mechanic's salary by id. Will 404 if id not found */
+  getSalary(id: number): Observable<Number> {
+    const url = `${this.mechanicsUrl}/${id}`;
+    return this.http.get<Number>(url).pipe(
+      tap(_ => this.log(`fetched mechanic id=${id}`)),
+      catchError(this.handleError<Number>(`getMechanic id=${id}`))
     );
   }
 

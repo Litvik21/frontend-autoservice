@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {Car} from "../car";
-import {CarService} from "../car.service";
+import {Car} from "../model/car";
+import {CarService} from "../service/car.service";
+import {CarOwner} from "../model/carOwner";
+import {CarOwnerService} from "../service/carOwner.service";
+import {FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-car',
@@ -8,13 +11,32 @@ import {CarService} from "../car.service";
   styleUrls: ['./car.component.scss']
 })
 export class CarComponent implements OnInit {
+  contactForm!: FormGroup;
 
-  cars: Car[] | undefined;
+  cars: Car[] = [];
+  owners: CarOwner[] = [];
+  owner!: CarOwner;
+  carBrand = "";
+  carModel = "";
+  carYear = "";
+  carNumber = "";
 
-  constructor(private carService: CarService) { }
+
+  constructor(private carService: CarService,
+              private ownerService: CarOwnerService,
+              private fb:FormBuilder) { }
 
   ngOnInit() {
     this.getCars();
+    this.getOwners();
+    this.contactForm = this.fb.group({
+      owner: [null]
+    })
+  }
+
+  getOwners(): void {
+    this.ownerService.getCarOwners()
+      .subscribe(owners => this.owners = owners);
   }
 
   getCars(): void {
@@ -22,17 +44,27 @@ export class CarComponent implements OnInit {
       .subscribe(cars => this.cars = cars);
   }
 
-  add(brand: string, model: string, year: string, number: string, carOwner: string): void {
-    brand = brand.trim();
-    model = model.trim();
-    year = year.trim();
-    number = number.trim();
-    carOwner = carOwner.trim();
-    if (!brand && !model && !year && !number && !carOwner) { return; }
-    this.carService.addCar({ brand, model, year, number, carOwner } as Car)
-      .subscribe(car => {
-        // @ts-ignore
-        this.cars.push(car);
-      });
+  submit() {
+    console.log("Form Submitted");
+    console.log(this.owner = this.owners.find(o => o.id == this.contactForm.value)!)
+  }
+
+  add(): void {
+    const carBrand = this.cars.find(c => c.brand === this.carBrand);
+    const carModel = this.cars.find(c => c.model === this.carModel);
+    const carYear = this.cars.find(c => c.year === this.carYear);
+    const carNumber = this.cars.find(c => c.number === this.carNumber);
+
+    if (!carBrand && !carModel && !carYear && !carNumber) {
+      let id = Math.max.apply(Math, this.cars.map(function (o) {return o.id;}));
+
+      this.carService.addCar({id: id + 1, brand: this.carBrand, model: this.carModel, year: this.carYear,
+       number: this.carNumber, carOwner: this.owner} as Car).subscribe(car => {this.cars.push(car)});
+
+      this.carBrand = "";
+      this.carModel = "";
+      this.carYear = "";
+      this.carNumber = "";
+    }
   }
 }

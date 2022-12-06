@@ -4,8 +4,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
-import { CarOwner } from './carOwner';
+import { CarOwner } from '../model/carOwner';
 import { MessageService } from './message.service';
+import {Car} from "../model/car";
+import {Order} from "../model/order";
+import {OrderService} from "./order.service";
 
 @Injectable({ providedIn: 'root' })
 export class CarOwnerService {
@@ -19,16 +22,32 @@ export class CarOwnerService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  /** GET heroes from the server */
-  getOrdersOfOwner(): Observable<CarOwner[]> {
+  /** GET orders from the server */
+  getCarOwners(): Observable<CarOwner[]> {
     return this.http.get<CarOwner[]>(this.ownersUrl)
       .pipe(
-        tap(_ => this.log('fetched mechanics')),
-        catchError(this.handleError<CarOwner[]>('getOrdersOfOwner', []))
+        tap(_ => this.log('fetched orders')),
+        catchError(this.handleError<CarOwner[]>('getCarOwners', []))
       );
   }
 
-  /** PUT: update the hero on the server */
+  /** GET owner by id from the server */
+  getCarOwner(id: number): Observable<CarOwner> {
+    const url = `${this.ownersUrl}/${id}`;
+    return this.http.get<CarOwner>(url).pipe(
+      tap(_ => this.log(`fetched owner id=${id}`))
+    );
+  }
+
+  /** GET orders of owner from the server */
+  getOrdersOfOwner(id: number): Observable<Order[]> {
+    const url = `${this.ownersUrl}/orders/${id}`;
+    return this.http.get<Order[]>(url).pipe(
+      tap(_ => this.log(`fetched owner id=${id}`))
+    );
+  }
+
+  /** PUT: update the car owner on the server */
   updateCarOwner(owner: CarOwner): Observable<any> {
     const url = `${this.ownersUrl}/${owner.id}`
     return this.http.put(url, owner, this.httpOptions).pipe(
@@ -37,7 +56,7 @@ export class CarOwnerService {
     );
   }
 
-  /** POST: add a new hero to the server */
+  /** POST: add a new car owner to the server */
   addCarOwner(owner: CarOwner): Observable<CarOwner> {
     return this.http.post<CarOwner>(this.ownersUrl, owner, this.httpOptions).pipe(
       tap((newOwner: CarOwner) => this.log(`added owner w/ id=${newOwner.id}`)),
@@ -65,8 +84,8 @@ export class CarOwnerService {
     };
   }
 
-  /** Log a HeroService message with the MessageService */
+  /** Log a CarOwnerService message with the MessageService */
   private log(message: string) {
-    this.messageService.add(`ProductService: ${message}`);
+    this.messageService.add(`CarOwnerService: ${message}`);
   }
 }

@@ -1,8 +1,10 @@
+import {CarOwner} from "./carOwner";
+
 export interface Car{
-  id: bigint;
+  id: number;
   model: string;
   brand: string;
   year: string;
   number: string;
-  carOwner: string;
+  carOwner: CarOwner;
 }

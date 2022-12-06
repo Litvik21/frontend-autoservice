@@ -1,22 +1,76 @@
-<h2>Orders</h2>
+<h2>Add order</h2>
 
-<div>
-  <label>Order title:
-    <input #orderCar />
-    <input #orderDescription />
-    <input #orderDateReceived />
-    <input #orderTasks />
-    <input #orderProducts />
-    <input #orderStatus />
-    <input #orderTotalPrice />
-    <input #orderDateFinished />
+<form [formGroup]="carForm" (ngSubmit)="submitCar()">
 
-  </label>
-  <!-- (click) passes input value to add() and then clears the input -->
-  <button (click)="add(orderCar.valueOf(), orderDescription.value, orderDateReceived.valueAsDate, orderTasks.valueOf(),
-  orderProducts.valueOf(), orderStatus.value, orderTotalPrice.valueAsNumber, orderDateFinished.valueAsDate);
-   orderCar.valueOf(); orderDescription.value=''; orderDateReceived.valueAsDate; orderTasks.valueOf(); orderProducts.valueOf();
-orderStatus.type=''; orderTotalPrice.valueAsNumber; orderDateFinished.valueAsDate">
-    add
-  </button>
+  <label>Select Car</label>
+  <p>
+    <label>By VIN number:</label>
+    <select formControlName="car">
+      <option [ngValue]="null" disabled>Select Car</option>
+      <option *ngFor="let car of cars" [ngValue]="car.id">{{car.number}}</option>
+    </select>
+
+    <button type="submit">Submit</button>
+  </p>
+
+</form>
+
+<p>
+  <label>Description:</label>
+  <input [(ngModel)]="description">
+</p>
+
+<form [formGroup]="taskForm" (ngSubmit)="submitTask()">
+
+  <label>Select Task</label>
+  <p>
+    <label>By Task ID:</label>
+    <select formControlName="task">
+      <option [ngValue]="null" disabled>Select Task</option>
+      <option *ngFor="let task of tasks" [ngValue]="task.id">{{task.id}}</option>
+    </select>
+
+    <button type="submit">Submit</button>
+  </p>
+
+</form>
+<form [formGroup]="productForm" (ngSubmit)="submitProduct()">
+
+  <label>Select Product</label>
+  <p>
+    <label>By Title:</label>
+    <select formControlName="title">
+      <option [ngValue]="null" disabled>Select Product</option>
+      <option *ngFor="let product of products" [ngValue]="product.id">{{product.title}}</option>
+    </select>
+
+    <button type="submit">Submit</button>
+  </p>
+
+</form>
+<p>
+  <label>Date finished:</label>
+  <input [(ngModel)]="dateFinished">
+</p>
+<button (click)="add()">Add</button>
+
+
+<h3>Orders:</h3>
+<div *ngFor="let item of orders">
+  {{item.id}} -- {{item.description}}
+</div>
+
+<h3>Cars:</h3>
+<div *ngFor="let item of cars">
+  {{item.id}} -- {{item.brand}} -- {{item.model}} -- {{item.number}}
+</div>
+
+<h3>Products:</h3>
+<div *ngFor="let item of products">
+  {{item.id}} -- {{item.title}} -- {{item.price}}
+</div>
+
+<h3>Tasks:</h3>
+<div *ngFor="let item of tasks">
+  {{item.id}} -- {{item.mechanic}} -- {{item.price}}
 </div>

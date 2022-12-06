@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {Mechanic} from "../mechanic";
-import {MechanicService} from "../mechanic.service";
+import {Mechanic} from "../model/mechanic";
+import {MechanicService} from "../service/mechanic.service";
+import {Order} from "../model/order";
+import {OrderService} from "../service/order.service";
+import {FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-mechanic',
@@ -8,13 +11,24 @@ import {MechanicService} from "../mechanic.service";
   styleUrls: ['./mechanic.component.scss']
 })
 export class MechanicComponent implements OnInit {
+  orderForm!: FormGroup;
 
-  mechanics: Mechanic[] | undefined;
+  mechanics: Mechanic[] = [];
+  orders: Order[] = [];
+  newOrders: Order[] = [];
 
-  constructor(private mechanicService: MechanicService) { }
+  mechanicName = "";
+
+  constructor(private mechanicService: MechanicService,
+              private orderService: OrderService,
+              private fb: FormBuilder) { }
 
   ngOnInit() {
     this.getMechanics();
+    this.getOrders();
+    this.orderForm = this.fb.group({
+      order: [null]
+    })
   }
 
   getMechanics(): void {
@@ -22,14 +36,27 @@ export class MechanicComponent implements OnInit {
       .subscribe(mechanics => this.mechanics = mechanics);
   }
 
-  add(name: string, finishedOrders: string): void {
-    name = name.trim();
-    finishedOrders = finishedOrders.trim();
-    if (!name && !finishedOrders) { return; }
-    this.mechanicService.addMechanic({ name, finishedOrders } as Mechanic)
-      .subscribe(mechanic => {
-        // @ts-ignore
-        this.mechanics.push(mechanic);
-      });
+  getOrders(): void {
+    this.orderService.getOrders()
+      .subscribe(orders => this.orders = orders);
+  }
+
+  submitOrder() {
+    console.log("Form Submitted");
+    console.log(this.newOrders.push(this.orders.find(o => o.id == this.orderForm.value)!))
+  }
+
+
+  add(): void {
+    const name = this.mechanics.find(m => m.name === this.mechanicName);
+
+    if (!name) {
+      let id = Math.max.apply(Math, this.mechanics.map(function (o) {return o.id;}));
+
+      this.mechanicService.addMechanic({id: id + 1, name: this.mechanicName, finishedOrders: this.newOrders} as Mechanic)
+        .subscribe(mechanic => {this.mechanics.push(mechanic)});
+
+      this.mechanicName = "";
+    }
   }
 }

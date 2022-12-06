@@ -1,13 +1,10 @@
-<h2>Products</h2>
-
-<div>
-  <label>Product title:
-    <input #productTitle />
-    <input #productPrice />
-  </label>
-  <!-- (click) passes input value to add() and then clears the input -->
-  <button (click)="add(productTitle.value, productPrice.valueAsNumber);
-   productTitle.value=''; productPrice.valueAsNumber=">
-    add
-  </button>
-</div>
+<h2>Add product</h2>
+<p>
+  <label>Title:</label>
+  <input [(ngModel)]="title">
+</p>
+<p>
+  <label>Price:</label>
+  <input [(ngModel)]="price">
+</p>
+<button (click)="add()">Add</button>

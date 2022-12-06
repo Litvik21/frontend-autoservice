@@ -1,13 +1,27 @@
-<h2>Mechanics</h2>
+<h2>Add mechanic</h2>
+<p>
+  <label>Name:</label>
+  <input [(ngModel)]="mechanicName">
+</p>
 
-<div>
-  <label>Mechanic title:
-    <input #mechanicName />
-    <input #mechanicFinishedOrders />
-  </label>
-  <!-- (click) passes input value to add() and then clears the input -->
-  <button (click)="add(mechanicName.value, mechanicFinishedOrders.value);
-   mechanicName.value=''; mechanicFinishedOrders.value=''">
-    add
-  </button>
+<form [formGroup]="orderForm" (ngSubmit)="submitOrder()">
+
+  <label>Select Finished Order</label>
+  <p>
+    <label>By Description:</label>
+    <select formControlName="order">
+      <option [ngValue]="null" disabled>Select Order</option>
+      <option *ngFor="let order of orders" [ngValue]="order.id">{{order.description}}</option>
+    </select>
+
+    <button type="submit">Submit</button>
+  </p>
+
+</form>
+
+<button (click)="add()">Add</button>
+
+<h3>Orders:</h3>
+<div *ngFor="let item of orders">
+  {{item.id}} -- {{item.description}}
 </div>

@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
-import { Task } from './task';
+import { Task } from '../model/task';
 import { MessageService } from './message.service';
 
 @Injectable({ providedIn: 'root' })
@@ -28,8 +28,8 @@ export class TaskService {
       );
   }
 
-  /** GET hero by id. Will 404 if id not found */
-  getTask(id: bigint): Observable<Task> {
+  /** GET task by id. Will 404 if id not found */
+  getTask(id: number): Observable<Task> {
     const url = `${this.taskUrl}/${id}`;
     return this.http.get<Task>(url).pipe(
       tap(_ => this.log(`fetched task id=${id}`)),
@@ -37,7 +37,7 @@ export class TaskService {
     );
   }
 
-  /** PUT: update the hero on the server */
+  /** PUT: update the task on the server */
   updateTask(task: Task): Observable<any> {
     const url = `${this.taskUrl}/${task.id}`
     return this.http.put(url, task, this.httpOptions).pipe(
@@ -46,7 +46,16 @@ export class TaskService {
     );
   }
 
-  /** POST: add a new hero to the server */
+  /** PUT: update the status of task on the server */
+  updateStatus(id: number, status: String): Observable<any> {
+    const url = `${this.taskUrl}/update-status/${id}`
+    return this.http.put(url, status, this.httpOptions).pipe(
+      tap(_ => this.log(`updated task id=${id}`)),
+      catchError(this.handleError<any>('updateStatus'))
+    );
+  }
+
+  /** POST: add a new task to the server */
   addTask(task: Task): Observable<Task> {
     return this.http.post<Task>(this.taskUrl, task, this.httpOptions).pipe(
       tap((newTask: Task) => this.log(`added task w/ id=${newTask.id}`)),

@@ -1,13 +1,42 @@
-<h2>Car Owners</h2>
+<h2>Add car owner</h2>
 
-<div>
-  <label>Car Owner title:
-    <input #carOwnerCars />
-    <input #carOwnerOrders />
-  </label>
-  <!-- (click) passes input value to add() and then clears the input -->
-  <button (click)="add(carOwnerCars.list, carOwnerOrders.value);
-   carOwnerCars.list[]=; carOwnerOrders.value='';">
-    add
-  </button>
+<form [formGroup]="carForm" (ngSubmit)="submitCar()">
+
+  <p>
+    <label>Select Car VIN number:</label>
+    <select formControlName="car">
+      <option [ngValue]="null" disabled>Select Car</option>
+      <option *ngFor="let car of cars" [ngValue]="car.id">{{car.number}}</option>
+    </select>
+
+    <button type="submit">Submit</button>
+  </p>
+
+</form>
+
+<form [formGroup]="orderForm" (ngSubmit)="submitOrder()">
+
+  <p>
+    <label>Select Order description:</label>
+    <select formControlName="order">
+      <option [ngValue]="null" disabled>Select Order</option>
+      <option *ngFor="let order of orders" [ngValue]="order.id">{{order.description}}</option>
+    </select>
+
+    <button type="submit">Submit</button>
+  </p>
+
+</form>
+
+
+<button (click)="add()">Add</button>
+
+<h3>Cars:</h3>
+<div *ngFor="let item of cars">
+  {{item.id}} -- {{item.brand}} -- {{item.model}} -- {{item.number}}
+</div>
+
+<h3>Orders:</h3>
+<div *ngFor="let item of orders">
+  {{item.id}} -- {{item.description}}
 </div>

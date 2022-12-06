@@ -4,8 +4,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
-import { Order } from './order';
+import { Order } from '../model/order';
 import { MessageService } from './message.service';
+import {Product} from "../model/product";
+import {Car} from "../model/car";
+import {Task} from "../model/task";
 
 @Injectable({ providedIn: 'root' })
 export class OrderService {
@@ -19,7 +22,7 @@ export class OrderService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  /** GET heroes from the server */
+  /** GET orders from the server */
   getOrders(): Observable<Order[]> {
     return this.http.get<Order[]>(this.ordersUrl)
       .pipe(
@@ -28,8 +31,8 @@ export class OrderService {
       );
   }
 
-  /** GET hero by id. Will 404 if id not found */
-  getOrder(id: bigint): Observable<Order> {
+  /** GET order by id. Will 404 if id not found */
+  getOrder(id: number): Observable<Order> {
     const url = `${this.ordersUrl}/${id}`;
     return this.http.get<Order>(url).pipe(
       tap(_ => this.log(`fetched hero id=${id}`)),
@@ -37,7 +40,7 @@ export class OrderService {
     );
   }
 
-  /** PUT: update the hero on the server */
+  /** PUT: update the order on the server */
   updateOrder(order: Order): Observable<any> {
     const url = `${this.ordersUrl}/${order.id}`
     return this.http.put(url, order, this.httpOptions).pipe(
@@ -46,12 +49,38 @@ export class OrderService {
     );
   }
 
-  /** POST: add a new hero to the server */
-  addOrder(order: Order): Observable<Order> {
+  /** PUT: update the status of order on the server */
+  updateStatus(id: number, status: String): Observable<any> {
+    const url = `${this.ordersUrl}/update-status/${id}`
+    return this.http.put(url, status, this.httpOptions).pipe(
+      tap(_ => this.log(`updated order id=${id}`)),
+      catchError(this.handleError<any>('updateOrder'))
+    );
+  }
+
+  /** GET total price by id. Will 404 if id not found */
+  getTotalPrice(id: number): Observable<Number> {
+    const url = `${this.ordersUrl}/price/${id}`;
+    return this.http.get<Number>(url).pipe(
+      tap(_ => this.log(`fetched order id=${id}`)),
+      catchError(this.handleError<Number>(`getOrder id=${id}`))
+    );
+  }
+
+  /** POST: add a new order to the server */
+  addOrder(order: { car: Car; dateFinished: Date; description: string; tasks: Task[]; products: Product[] }): Observable<Order> {
     return this.http.post<Order>(this.ordersUrl, order, this.httpOptions).pipe(
       tap((newOrder: Order) => this.log(`added order w/ id=${newOrder.id}`)),
       catchError(this.handleError<Order>('addOrder'))
     );
+  }
+
+  /** GET order by id. Will 404 if id not found */
+  addProductToOrder(id: number, product: Product): Observable<Order> {
+    return this.http.post<Order>(`${this.ordersUrl}/add-product/${id}`, product, this.httpOptions).pipe(
+      tap((newOrder: Order) => this.log(`added order w/ id=${newOrder.id}`)),
+      catchError(this.handleError<Order>('addOrder'))
+    )
   }
 
   /**

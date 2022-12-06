@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {CarOwner} from "../carOwner";
-import {CarOwnerService} from "../carOwner.service";
-import * as constants from "constants";
-import * as path from "path";
-import * as stream from "stream";
+import {CarOwner} from "../model/carOwner";
+import {CarOwnerService} from "../service/carOwner.service";
+import {Car} from "../model/car";
+import {Order} from "../model/order";
+import {CarService} from "../service/car.service";
+import {OrderService} from "../service/order.service";
+import {FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-car-owner',
@@ -11,30 +13,65 @@ import * as stream from "stream";
   styleUrls: ['./car-owner.component.scss']
 })
 export class CarOwnerComponent implements OnInit {
+  orderForm!: FormGroup;
+  carForm!: FormGroup;
 
+  owners: CarOwner[] = [];
+  cars: Car[] = [];
+  orders: Order[] = [];
+  newCars: Car[] = [];
+  newOrders: Order[] = [];
 
-  owners: CarOwner[] | undefined;
-
-  constructor(private ownerService: CarOwnerService) { }
+  constructor(private ownerService: CarOwnerService,
+              private carService: CarService,
+              private orderService:OrderService,
+              private fb:FormBuilder) { }
 
   ngOnInit() {
-    this.getOrdersOfOwner();
+    this.getCarOwners();
+    this.getCars();
+    this.getOrders();
+    this.orderForm = this.fb.group({
+      order: [null]
+    })
+    this.carForm = this.fb.group({
+      car: [null]
+    })
   }
 
-  getOrdersOfOwner(): void {
-    this.ownerService.getOrdersOfOwner()
+  getCars(): void {
+    this.carService.getCars()
+      .subscribe(cars => this.cars = cars);
+  }
+
+  getOrders(): void {
+    this.orderService.getOrders()
+      .subscribe(orders => this.orders = orders);
+  }
+
+  getCarOwners(): void {
+    this.ownerService.getCarOwners()
       .subscribe(owners => this.owners = owners);
   }
 
-  add(cars: stream, orders: string,): void {
-    cars = cars.pipe;
-    orders = orders.trim();
-    if (!cars && !orders) { return; }
-    this.ownerService.addCarOwner({ cars, orders } as CarOwner)
-      .subscribe(owner => {
-        // @ts-ignore
-        this.cars.push(owner);
-      });
+  submitCar() {
+    console.log("Form Submitted");
+    console.log(this.newCars.push(this.cars.find(c => c.id == this.carForm.value)!))
+  }
+
+  submitOrder() {
+    console.log("Form Submitted");
+    console.log(this.newOrders.push(this.orders.find(o => o.id == this.orderForm.value)!))
+  }
+
+  add(): void {
+    let id = Math.max.apply(Math, this.owners.map(function (o) {return o.id;}))
+
+      //this.carService.getCar(this.carID).subscribe((o:Car) => { this.newCar = o; });
+      //this.orderService.getOrder(this.orderID).subscribe((o:Order) => { this.newOrder = o; });
+
+    this.ownerService.addCarOwner({id: id + 1, cars: this.newCars, orders: this.newOrders} as CarOwner)
+      .subscribe(owner => {this.owners.push(owner)})
   }
 
 }
