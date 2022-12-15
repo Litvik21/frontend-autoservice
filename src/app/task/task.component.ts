@@ -70,13 +70,11 @@ export class TaskComponent implements OnInit {
   }
 
   submitMechanic() {
-    console.log("Form Submitted");
-    console.log(this.newMechanic = this.mechanics.find(m => m.id == this.mechanicForm.value)!)
+    this.newMechanic = this.mechanics.find(m => m.id == this.mechanicForm.value)!
   }
 
   submitOrder() {
-    console.log("Form Submitted");
-    console.log(this.newOrder = this.orders.find(o => o.id == this.orderForm.value)!)
+    this.newOrder = this.orders.find(o => o.id == this.orderForm.value)!
   }
 
   add(): void {

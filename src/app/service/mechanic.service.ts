@@ -7,11 +7,10 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { Mechanic } from '../model/mechanic';
 import { MessageService } from './message.service';
 import {Order} from "../model/order";
-import {Car} from "../model/car";
 
 @Injectable({ providedIn: 'root' })
 export class MechanicService {
-  private mechanicsUrl = 'http://localhost:6868/mechanics';  // URL to web api
+  private mechanicsUrl = 'http://localhost:6868/mechanics';
 
   constructor(
     private http: HttpClient,
@@ -21,7 +20,6 @@ export class MechanicService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  /** GET heroes from the server */
   getMechanics(): Observable<Mechanic[]> {
     return this.http.get<Mechanic[]>(this.mechanicsUrl)
       .pipe(
@@ -30,7 +28,6 @@ export class MechanicService {
       );
   }
 
-  /** GET mechanic by id. Will 404 if id not found */
   getMechanic(id: number): Observable<Mechanic> {
     const url = `${this.mechanicsUrl}/${id}`;
     return this.http.get<Mechanic>(url).pipe(
@@ -39,7 +36,6 @@ export class MechanicService {
     );
   }
 
-  /** GET mechanic's finished orders by id. Will 404 if id not found */
   getFinishedOrders(id: number): Observable<Order[]> {
     const url = `${this.mechanicsUrl}/${id}/finished-orders`;
     return this.http.get<Order[]>(url).pipe(
@@ -48,7 +44,6 @@ export class MechanicService {
     );
   }
 
-  /** GET mechanic's salary by id. Will 404 if id not found */
   getSalary(id: number): Observable<Number> {
     const url = `${this.mechanicsUrl}/${id}`;
     return this.http.get<Number>(url).pipe(
@@ -57,7 +52,6 @@ export class MechanicService {
     );
   }
 
-  /** PUT: update the hero on the server */
   updateMechanic(mechanic: Mechanic): Observable<any> {
     const url = `${this.mechanicsUrl}/${mechanic.id}`
     return this.http.put(url, mechanic, this.httpOptions).pipe(
@@ -66,7 +60,6 @@ export class MechanicService {
     );
   }
 
-  /** POST: add a new hero to the server */
   addMechanic(mechanic: Mechanic): Observable<Mechanic> {
     return this.http.post<Mechanic>(this.mechanicsUrl, mechanic, this.httpOptions).pipe(
       tap((newMechanic: Mechanic) => this.log(`added mechanic w/ id=${newMechanic.id}`)),
@@ -74,27 +67,17 @@ export class MechanicService {
     );
   }
 
-  /**
-   * Handle Http operation that failed.
-   * Let the app continue.
-   * @param operation - name of the operation that failed
-   * @param result - optional value to return as the observable result
-   */
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
+      console.error(error);
 
-      // TODO: better job of transforming error for user consumption
       this.log(`${operation} failed: ${error.message}`);
 
-      // Let the app keep running by returning an empty result.
       return of(result as T);
     };
   }
 
-  /** Log a HeroService message with the MessageService */
   private log(message: string) {
     this.messageService.add(`ProductService: ${message}`);
   }

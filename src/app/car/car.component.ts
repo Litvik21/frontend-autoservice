@@ -45,26 +45,18 @@ export class CarComponent implements OnInit {
   }
 
   submit() {
-    console.log("Form Submitted");
-    console.log(this.owner = this.owners.find(o => o.id == this.contactForm.value)!)
+    this.owner = this.owners.find(o => o.id == this.contactForm.value)!
   }
 
   add(): void {
-    const carBrand = this.cars.find(c => c.brand === this.carBrand);
-    const carModel = this.cars.find(c => c.model === this.carModel);
-    const carYear = this.cars.find(c => c.year === this.carYear);
-    const carNumber = this.cars.find(c => c.number === this.carNumber);
+    let id = Math.max.apply(Math, this.cars.map(function (o) {return o.id;}));
 
-    if (!carBrand && !carModel && !carYear && !carNumber) {
-      let id = Math.max.apply(Math, this.cars.map(function (o) {return o.id;}));
+    this.carService.addCar({id: id + 1, brand: this.carBrand, model: this.carModel, year: this.carYear,
+      number: this.carNumber, carOwner: this.owner} as Car).subscribe(car => {this.cars.push(car)});
 
-      this.carService.addCar({id: id + 1, brand: this.carBrand, model: this.carModel, year: this.carYear,
-       number: this.carNumber, carOwner: this.owner} as Car).subscribe(car => {this.cars.push(car)});
-
-      this.carBrand = "";
-      this.carModel = "";
-      this.carYear = "";
-      this.carNumber = "";
-    }
+    this.carBrand = "";
+    this.carModel = "";
+    this.carYear = "";
+    this.carNumber = "";
   }
 }

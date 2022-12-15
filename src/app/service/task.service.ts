@@ -9,7 +9,7 @@ import { MessageService } from './message.service';
 
 @Injectable({ providedIn: 'root' })
 export class TaskService {
-  private taskUrl = 'http://localhost:6868/tasks';  // URL to web api
+  private taskUrl = 'http://localhost:6868/tasks';
 
   constructor(
     private http: HttpClient,
@@ -19,7 +19,6 @@ export class TaskService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  /** GET heroes from the server */
   getTasks(): Observable<Task[]> {
     return this.http.get<Task[]>(this.taskUrl)
       .pipe(
@@ -28,7 +27,6 @@ export class TaskService {
       );
   }
 
-  /** GET task by id. Will 404 if id not found */
   getTask(id: number): Observable<Task> {
     const url = `${this.taskUrl}/${id}`;
     return this.http.get<Task>(url).pipe(
@@ -37,7 +35,6 @@ export class TaskService {
     );
   }
 
-  /** PUT: update the task on the server */
   updateTask(task: Task): Observable<any> {
     const url = `${this.taskUrl}/${task.id}`
     return this.http.put(url, task, this.httpOptions).pipe(
@@ -46,7 +43,6 @@ export class TaskService {
     );
   }
 
-  /** PUT: update the status of task on the server */
   updateStatus(id: number, status: String): Observable<any> {
     const url = `${this.taskUrl}/update-status/${id}`
     return this.http.put(url, status, this.httpOptions).pipe(
@@ -55,7 +51,6 @@ export class TaskService {
     );
   }
 
-  /** POST: add a new task to the server */
   addTask(task: Task): Observable<Task> {
     return this.http.post<Task>(this.taskUrl, task, this.httpOptions).pipe(
       tap((newTask: Task) => this.log(`added task w/ id=${newTask.id}`)),
@@ -63,27 +58,17 @@ export class TaskService {
     );
   }
 
-  /**
-   * Handle Http operation that failed.
-   * Let the app continue.
-   * @param operation - name of the operation that failed
-   * @param result - optional value to return as the observable result
-   */
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
+      console.error(error);
 
-      // TODO: better job of transforming error for user consumption
       this.log(`${operation} failed: ${error.message}`);
 
-      // Let the app keep running by returning an empty result.
       return of(result as T);
     };
   }
 
-  /** Log a HeroService message with the MessageService */
   private log(message: string) {
     this.messageService.add(`ProductService: ${message}`);
   }

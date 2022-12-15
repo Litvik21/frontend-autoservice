@@ -74,18 +74,15 @@ export class OrderComponent implements OnInit {
   }
 
   submitProduct() {
-    console.log("Form Submitted");
-    console.log(this.newProducts.push(this.products.find(p => p.id == this.productForm.value)!))
+    this.newProducts.push(this.products.find(p => p.id == this.productForm.value)!)
   }
 
   submitTask() {
-    console.log("Form Submitted");
-    console.log(this.newTasks.push(this.tasks.find(t => t.id == this.taskForm.value)!))
+    this.newTasks.push(this.tasks.find(t => t.id == this.taskForm.value)!)
   }
 
   submitCar() {
-    console.log("Form Submitted");
-    console.log(this.newCar = this.cars.find(c => c.id == this.carForm.value)!)
+    this.newCar = this.cars.find(c => c.id == this.carForm.value)!
   }
 
   add(): void {

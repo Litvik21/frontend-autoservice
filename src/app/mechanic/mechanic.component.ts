@@ -42,21 +42,15 @@ export class MechanicComponent implements OnInit {
   }
 
   submitOrder() {
-    console.log("Form Submitted");
-    console.log(this.newOrders.push(this.orders.find(o => o.id == this.orderForm.value)!))
+    this.newOrders.push(this.orders.find(o => o.id == this.orderForm.value)!)
   }
 
-
   add(): void {
-    const name = this.mechanics.find(m => m.name === this.mechanicName);
+    let id = Math.max.apply(Math, this.mechanics.map(function (o) {return o.id;}));
 
-    if (!name) {
-      let id = Math.max.apply(Math, this.mechanics.map(function (o) {return o.id;}));
+    this.mechanicService.addMechanic({id: id + 1, name: this.mechanicName, finishedOrders: this.newOrders} as Mechanic)
+      .subscribe(mechanic => {this.mechanics.push(mechanic)});
 
-      this.mechanicService.addMechanic({id: id + 1, name: this.mechanicName, finishedOrders: this.newOrders} as Mechanic)
-        .subscribe(mechanic => {this.mechanics.push(mechanic)});
-
-      this.mechanicName = "";
-    }
+    this.mechanicName = "";
   }
 }

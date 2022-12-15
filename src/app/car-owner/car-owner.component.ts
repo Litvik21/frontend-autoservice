@@ -55,23 +55,16 @@ export class CarOwnerComponent implements OnInit {
   }
 
   submitCar() {
-    console.log("Form Submitted");
-    console.log(this.newCars.push(this.cars.find(c => c.id == this.carForm.value)!))
+    this.newCars.push(this.cars.find(c => c.id == this.carForm.value)!)
   }
 
   submitOrder() {
-    console.log("Form Submitted");
-    console.log(this.newOrders.push(this.orders.find(o => o.id == this.orderForm.value)!))
+    this.newOrders.push(this.orders.find(o => o.id == this.orderForm.value)!)
   }
 
   add(): void {
     let id = Math.max.apply(Math, this.owners.map(function (o) {return o.id;}))
-
-      //this.carService.getCar(this.carID).subscribe((o:Car) => { this.newCar = o; });
-      //this.orderService.getOrder(this.orderID).subscribe((o:Order) => { this.newOrder = o; });
-
     this.ownerService.addCarOwner({id: id + 1, cars: this.newCars, orders: this.newOrders} as CarOwner)
       .subscribe(owner => {this.owners.push(owner)})
   }
-
 }

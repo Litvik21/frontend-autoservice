@@ -9,7 +9,7 @@ import { MessageService } from './message.service';
 
 @Injectable({ providedIn: 'root' })
 export class CarService {
-  private carsUrl = 'http://localhost:6868/cars';  // URL to web api
+  private carsUrl = 'http://localhost:6868/cars';
 
   constructor(
     private http: HttpClient,
@@ -19,7 +19,6 @@ export class CarService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  /** GET cars from the server */
   getCars(): Observable<Car[]> {
     return this.http.get<Car[]>(this.carsUrl)
       .pipe(
@@ -28,7 +27,6 @@ export class CarService {
       );
   }
 
-  /** GET car by id. Will 404 if id not found */
   getCar(id: number): Observable<Car> {
     const url = `${this.carsUrl}/${id}`;
     return this.http.get<Car>(url).pipe(
@@ -37,7 +35,6 @@ export class CarService {
     );
   }
 
-  /** PUT: update the car on the server */
   updateCar(car: Car): Observable<any> {
     const url = `${this.carsUrl}/${car.id}`
     return this.http.put(url, car, this.httpOptions).pipe(
@@ -46,7 +43,6 @@ export class CarService {
     );
   }
 
-  /** POST: add a new car to the server */
   addCar(car: Car): Observable<Car> {
     return this.http.post<Car>(this.carsUrl, car, this.httpOptions).pipe(
       tap((newCar: Car) => this.log(`added car w/ id=${newCar.id}`)),
@@ -54,27 +50,17 @@ export class CarService {
     );
   }
 
-  /**
-   * Handle Http operation that failed.
-   * Let the app continue.
-   * @param operation - name of the operation that failed
-   * @param result - optional value to return as the observable result
-   */
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
+      console.error(error);
 
-      // TODO: better job of transforming error for user consumption
       this.log(`${operation} failed: ${error.message}`);
 
-      // Let the app keep running by returning an empty result.
       return of(result as T);
     };
   }
 
-  /** Log a CarService message with the MessageService */
   private log(message: string) {
     this.messageService.add(`CarService: ${message}`);
   }

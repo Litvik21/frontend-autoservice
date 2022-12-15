@@ -12,7 +12,7 @@ import {Task} from "../model/task";
 
 @Injectable({ providedIn: 'root' })
 export class OrderService {
-  private ordersUrl = 'http://localhost:6868/orders';  // URL to web api
+  private ordersUrl = 'http://localhost:6868/orders';
 
   constructor(
     private http: HttpClient,
@@ -22,7 +22,6 @@ export class OrderService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  /** GET orders from the server */
   getOrders(): Observable<Order[]> {
     return this.http.get<Order[]>(this.ordersUrl)
       .pipe(
@@ -31,7 +30,6 @@ export class OrderService {
       );
   }
 
-  /** GET order by id. Will 404 if id not found */
   getOrder(id: number): Observable<Order> {
     const url = `${this.ordersUrl}/${id}`;
     return this.http.get<Order>(url).pipe(
@@ -40,7 +38,6 @@ export class OrderService {
     );
   }
 
-  /** PUT: update the order on the server */
   updateOrder(order: Order): Observable<any> {
     const url = `${this.ordersUrl}/${order.id}`
     return this.http.put(url, order, this.httpOptions).pipe(
@@ -49,7 +46,6 @@ export class OrderService {
     );
   }
 
-  /** PUT: update the status of order on the server */
   updateStatus(id: number, status: String): Observable<any> {
     const url = `${this.ordersUrl}/update-status/${id}`
     return this.http.put(url, status, this.httpOptions).pipe(
@@ -58,7 +54,6 @@ export class OrderService {
     );
   }
 
-  /** GET total price by id. Will 404 if id not found */
   getTotalPrice(id: number): Observable<Number> {
     const url = `${this.ordersUrl}/price/${id}`;
     return this.http.get<Number>(url).pipe(
@@ -67,7 +62,6 @@ export class OrderService {
     );
   }
 
-  /** POST: add a new order to the server */
   addOrder(order: { car: Car; dateFinished: Date; description: string; tasks: Task[]; products: Product[] }): Observable<Order> {
     return this.http.post<Order>(this.ordersUrl, order, this.httpOptions).pipe(
       tap((newOrder: Order) => this.log(`added order w/ id=${newOrder.id}`)),
@@ -75,7 +69,6 @@ export class OrderService {
     );
   }
 
-  /** GET order by id. Will 404 if id not found */
   addProductToOrder(id: number, product: Product): Observable<Order> {
     return this.http.post<Order>(`${this.ordersUrl}/add-product/${id}`, product, this.httpOptions).pipe(
       tap((newOrder: Order) => this.log(`added order w/ id=${newOrder.id}`)),
@@ -83,27 +76,17 @@ export class OrderService {
     )
   }
 
-  /**
-   * Handle Http operation that failed.
-   * Let the app continue.
-   * @param operation - name of the operation that failed
-   * @param result - optional value to return as the observable result
-   */
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
+      console.error(error);
 
-      // TODO: better job of transforming error for user consumption
       this.log(`${operation} failed: ${error.message}`);
 
-      // Let the app keep running by returning an empty result.
       return of(result as T);
     };
   }
 
-  /** Log a HeroService message with the MessageService */
   private log(message: string) {
     this.messageService.add(`ProductService: ${message}`);
   }

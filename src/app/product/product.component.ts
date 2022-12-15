@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Product} from "../model/product";
 import {ProductService} from "../service/product.service";
-import {Mechanic} from "../model/mechanic";
 
 @Component({
   selector: 'app-product',
@@ -26,17 +25,12 @@ export class ProductComponent implements OnInit {
   }
 
   add(): void {
-    const prodTitle = this.products.find(p => p.title === this.title);
-    const prodPrice = this.products.find(p => p.price === this.price);
+    let id = Math.max.apply(Math, this.products.map(function (o) {return o.id;}));
 
-    if (!prodTitle && !prodPrice) {
-      let id = Math.max.apply(Math, this.products.map(function (o) {return o.id;}));
+    this.productService.addProduct({id: id + 1, title: this.title, price: this.price} as Product)
+      .subscribe(product => {this.products.push(product)});
 
-      this.productService.addProduct({id: id + 1, title: this.title, price: this.price} as Product)
-        .subscribe(product => {this.products.push(product)});
-
-      this.title = "";
-      this.price = 0;
-    }
+    this.title = "";
+    this.price = 0;
   }
 }
