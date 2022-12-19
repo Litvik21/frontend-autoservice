@@ -1,0 +1,27 @@
+<div *ngIf="owner">
+  <h2>Owner Details</h2>
+  <div><span>id: </span>{{owner.id}}</div>
+  <div>
+    <label>Cars:
+      <input [(ngModel)]="owner.cars" placeholder="cars"/>
+    </label>
+  </div>
+  <div>
+    <label>Orders:
+      <input [(ngModel)]="owner.orders" placeholder="orders"/>
+    </label>
+  </div>
+
+  <button (click)="goBack()">go back</button>
+  <button (click)="save()">save</button>
+</div>
+
+<h3>Cars:</h3>
+<div *ngFor="let item of cars">
+  {{item.id}} -- {{item.brand}} -- {{item.model}} -- {{item.number}}
+</div>
+
+<h3>Orders:</h3>
+<div *ngFor="let item of orders">
+  {{item.id}} -- {{item.description}}
+</div>

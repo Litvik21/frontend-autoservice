@@ -1,0 +1,12 @@
+<div *ngIf="mechanic">
+  <h2>Mechanic {{mechanic.name}} Details</h2>
+  <div><span>id: </span>{{mechanic.id}}</div>
+
+  <button (click)="goBack()">Go back</button>
+  <button (click)="getOrders()">Get Orders</button>
+</div>
+
+<h3>Orders:</h3>
+<div *ngFor="let item of orders">
+  {{item.id}} -- {{item.description}}
+</div>

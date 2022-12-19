@@ -1,0 +1,46 @@
+<div *ngIf="order">
+  <h2>Order Details</h2>
+  <div><span>id: </span>{{order.id}}</div>
+  <div>
+    <label>Car:
+      <input [(ngModel)]="order.car" placeholder="car"/>
+    </label>
+  </div>
+  <div>
+    <label>Description:
+      <input [(ngModel)]="order.description" placeholder="description"/>
+    </label>
+  </div>
+  <div>
+    <label>Tasks:
+      <input [(ngModel)]="order.tasks" placeholder="tasks"/>
+    </label>
+  </div>
+  <div>
+    <label>Products:
+      <input [(ngModel)]="order.products" placeholder="products"/>
+    </label>
+  </div>
+  <div>
+    <label>Date Finished:
+      <input [(ngModel)]="order.dateFinished" placeholder="dateFinished"/>
+    </label>
+  </div>
+  <button (click)="goBack()">go back</button>
+  <button (click)="save()">save</button>
+</div>
+
+<h3>Tasks:</h3>
+<div *ngFor="let item of tasks">
+  {{item.id}}
+</div>
+
+<h3>Products:</h3>
+<div *ngFor="let item of products">
+  {{item.id}} --  {{item.title}}
+</div>
+
+<h3>Cars:</h3>
+<div *ngFor="let item of cars">
+  {{item.id}} -- {{item.number}}
+</div>
