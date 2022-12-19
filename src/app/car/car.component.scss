@@ -1,72 +1,63 @@
-.cars{
-  margin: 0 0 2em 0;
-  list-style-type: none;
-  padding: 0;
-  width: 15em;
-}
-.cars li {
-  position: relative;
-  cursor: pointer;
-  background-color: #EEE;
-  margin: .5em;
-  padding: .3em 0;
-  height: 1.6em;
-  border-radius: 4px;
+h2 {
+  font-family: 'Open Sans', sans-serif;
+  text-align: center;
+  color: #333333;
 }
 
-.cars li:hover {
-  color: #607D8B;
-  background-color: #DDD;
-  left: .1em;
-}
-
-.cars a {
-  color: #333;
-  text-decoration: none;
-  position: relative;
-  display: block;
-  width: 250px;
-}
-
-.cars a:hover {
-  color: #607D8B;
-}
-
-.cars .badge {
-  display: inline-block;
-  font-size: small;
-  color: white;
-  padding: 0.8em 0.7em 0 0.7em;
-  background-color: #405061;
-  line-height: 1em;
-  position: relative;
-  left: -1px;
-  top: -4px;
-  height: 1.8em;
-  min-width: 16px;
-  text-align: right;
-  margin-right: .8em;
-  border-radius: 4px 0 0 4px;
+p {
+  text-align: center;
 }
 
 button {
-  background-color: #eee;
+  background-color: #607D8B;
+  font-size: 14px;
   border: none;
-  padding: 5px 10px;
-  border-radius: 4px;
+  padding: 10px 30px;
+  border-radius: 10px;
   cursor: pointer;
   cursor: hand;
-  font-family: Arial;
+  font-family: 'Open Sans', sans-serif;
+  margin: 0 auto;
+  display: block;
 }
 
+
 button:hover {
+  color: coral;
   background-color: #cfd8dc;
 }
 
-button.delete {
-  position: relative;
-  left: 194px;
-  top: -32px;
-  background-color: gray !important;
-  color: white;
+table {
+  border-spacing: 0 1px;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: bold;
+}
+th {
+  padding: 10px 20px;
+  background-color: #607D8B;
+  color: black;
+  border-right: 2px solid;
+  font-size: 0.9em;
+}
+th:first-child {
+  text-align: left;
+}
+th:last-child {
+  border-right: none;
+}
+td {
+  vertical-align: middle;
+  padding: 10px;
+  font-size: 14px;
+  text-align: center;
+  border-top: 2px solid #56433D;
+  border-bottom: 2px solid #56433D;
+  border-right: 2px solid #56433D;
+}
+td:first-child {
+  border-left: 2px solid #56433D;
+}
+
+td:nth-child(2){
+  text-align: left;
 }

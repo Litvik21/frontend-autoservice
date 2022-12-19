@@ -2,9 +2,9 @@
 
 <form [formGroup]="carForm" (ngSubmit)="submitCar()">
 
-  <label>Select Car</label>
   <p>
-    <label>By VIN number:</label>
+    <label>Select Car</label>
+    <label> By VIN number:</label>
     <select formControlName="car">
       <option [ngValue]="null" disabled>Select Car</option>
       <option *ngFor="let car of cars" [ngValue]="car.id">{{car.number}}</option>
@@ -22,9 +22,9 @@
 
 <form [formGroup]="taskForm" (ngSubmit)="submitTask()">
 
-  <label>Select Task</label>
   <p>
-    <label>By Task ID:</label>
+    <label>Select Task</label>
+    <label> By Task ID:</label>
     <select formControlName="task">
       <option [ngValue]="null" disabled>Select Task</option>
       <option *ngFor="let task of tasks" [ngValue]="task.id">{{task.id}}</option>
@@ -36,9 +36,9 @@
 </form>
 <form [formGroup]="productForm" (ngSubmit)="submitProduct()">
 
-  <label>Select Product</label>
   <p>
-    <label>By Title:</label>
+    <label>Select Product</label>
+    <label> By Title:</label>
     <select formControlName="title">
       <option [ngValue]="null" disabled>Select Product</option>
       <option *ngFor="let product of products" [ngValue]="product.id">{{product.title}}</option>
@@ -56,21 +56,73 @@
 
 
 <h3>Orders:</h3>
-<div *ngFor="let item of orders">
-  {{item.id}} -- {{item.description}}
-</div>
+<table>
+  <tbody>
+  <tr>
+    <th>ID</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <div *ngFor="let item of orders">
+      <th>{{item.id}}</th>
+      <th>{{item.description}}</th>
+    </div>
+  </tr>
+  </tbody>
+</table>
 
 <h3>Cars:</h3>
-<div *ngFor="let item of cars">
-  {{item.id}} -- {{item.brand}} -- {{item.model}} -- {{item.number}}
-</div>
+<table>
+  <tbody>
+  <tr>
+    <th>ID</th>
+    <th>Brand</th>
+    <th>Model</th>
+    <th>VIN number</th>
+  </tr>
+  <tr>
+    <div *ngFor="let item of cars">
+      <th>{{item.id}}</th>
+      <th>{{item.brand}}</th>
+      <th>{{item.model}}</th>
+      <th>{{item.number}}</th>
+    </div>
+  </tr>
+  </tbody>
+</table>
 
 <h3>Products:</h3>
-<div *ngFor="let item of products">
-  {{item.id}} -- {{item.title}} -- {{item.price}}
-</div>
+<table>
+  <tbody>
+  <tr>
+    <th>ID</th>
+    <th>Title</th>
+    <th>Price</th>
+  </tr>
+  <tr>
+    <div *ngFor="let item of products">
+      <th>{{item.id}}</th>
+      <th>{{item.title}}</th>
+      <th>{{item.price}}</th>
+    </div>
+  </tr>
+  </tbody>
+</table>
 
 <h3>Tasks:</h3>
-<div *ngFor="let item of tasks">
-  {{item.id}} -- {{item.mechanic}} -- {{item.price}}
-</div>
+<table>
+  <tbody>
+  <tr>
+    <th>ID</th>
+    <th>Mechanic</th>
+    <th>Price</th>
+  </tr>
+  <tr>
+    <div *ngFor="let item of tasks">
+      <th>{{item.id}}</th>
+      <th>{{item.mechanic}}</th>
+      <th>{{item.price}}</th>
+    </div>
+  </tr>
+  </tbody>
+</table>

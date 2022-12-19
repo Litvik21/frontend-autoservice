@@ -1,33 +1,63 @@
-label {
-  display: inline-block;
-  width: 3em;
-  margin: .5em 0;
-  color: #607D8B;
-  font-weight: bold;
+h2 {
+  font-family: 'Open Sans', sans-serif;
+  text-align: center;
+  color: #333333;
 }
 
-input {
-  height: 2em;
-  font-size: 1em;
-  padding-left: .4em;
+p {
+  text-align: center;
 }
 
 button {
-  margin-top: 20px;
-  font-family: Arial;
-  background-color: #eee;
+  background-color: #607D8B;
+  font-size: 14px;
   border: none;
-  padding: 5px 10px;
-  border-radius: 4px;
+  padding: 10px 30px;
+  border-radius: 10px;
   cursor: pointer;
+  cursor: hand;
+  font-family: 'Open Sans', sans-serif;
+  margin: 0 auto;
+  display: block;
 }
 
+
 button:hover {
+  color: coral;
   background-color: #cfd8dc;
 }
 
-button:disabled {
-  background-color: #eee;
-  color: #ccc;
-  cursor: auto;
+table {
+  border-spacing: 0 1px;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: bold;
+}
+th {
+  padding: 10px 20px;
+  background-color: #607D8B;
+  color: black;
+  border-right: 2px solid;
+  font-size: 0.9em;
+}
+th:first-child {
+  text-align: left;
+}
+th:last-child {
+  border-right: none;
+}
+td {
+  vertical-align: middle;
+  padding: 10px;
+  font-size: 14px;
+  text-align: center;
+  border-top: 2px solid #56433D;
+  border-bottom: 2px solid #56433D;
+  border-right: 2px solid #56433D;
+}
+td:first-child {
+  border-left: 2px solid #56433D;
+}
+
+td:nth-child(2){
+  text-align: left;
 }

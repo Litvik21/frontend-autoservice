@@ -1,5 +1,6 @@
 h1 {
-  font-size: 1.2em;
+  font-size: 20px;
+  font-family: 'Open Sans', sans-serif;
   margin-bottom: 0;
 }
 h2 {
@@ -12,16 +13,22 @@ nav a {
   text-decoration: none;
   margin-top: 10px;
   display: inline-block;
-  background-color: #eee;
+  background-color: #607D8B;
   border-radius: 4px;
+  font-size: 20px;
+  font-family: 'Open Sans', sans-serif;
+  margin-left: 1px;
 }
+
 nav a:visited, a:link {
-  color: #334953;
+  color: black;
 }
+
 nav a:hover {
-  color: #039be5;
+  color: coral;
   background-color: #cfd8dc;
 }
+
 nav a.active {
-  color: #039be5;
+  color: coral;
 }

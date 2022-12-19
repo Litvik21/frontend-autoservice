@@ -6,9 +6,9 @@
 
 <form [formGroup]="orderForm" (ngSubmit)="submitOrder()">
 
-  <label>Select Finished Order</label>
   <p>
-    <label>By Description:</label>
+    <label>Select Finished Order</label>
+    <label> By Description:</label>
     <select formControlName="order">
       <option [ngValue]="null" disabled>Select Order</option>
       <option *ngFor="let order of orders" [ngValue]="order.id">{{order.description}}</option>
@@ -22,6 +22,17 @@
 <button (click)="add()">Add</button>
 
 <h3>Orders:</h3>
-<div *ngFor="let item of orders">
-  {{item.id}} -- {{item.description}}
-</div>
+<table>
+  <tbody>
+  <tr>
+    <th>ID</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <div *ngFor="let item of orders">
+      <th>{{item.id}}</th>
+      <th>{{item.description}}</th>
+    </div>
+  </tr>
+  </tbody>
+</table>

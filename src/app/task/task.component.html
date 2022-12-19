@@ -7,9 +7,9 @@
 
 <form [formGroup]="orderForm" (ngSubmit)="submitOrder()">
 
-  <label>Select Order</label>
   <p>
-    <label>By Description:</label>
+    <label>Select Order</label>
+    <label> By Description:</label>
     <select formControlName="order">
       <option [ngValue]="null" disabled>Select Order</option>
       <option *ngFor="let order of orders" [ngValue]="order.id">{{order.description}}</option>
@@ -21,9 +21,9 @@
 </form>
 <form [formGroup]="mechanicForm" (ngSubmit)="submitMechanic()">
 
-  <label>Select Mechanic</label>
   <p>
-    <label>By Name:</label>
+    <label>Select Mechanic</label>
+    <label> By Name:</label>
     <select formControlName="mechanic">
       <option [ngValue]="null" disabled>Select Mechanic</option>
       <option *ngFor="let mechanic of mechanics" [ngValue]="mechanic.id">{{mechanic.name}}</option>
@@ -45,14 +45,36 @@
 
 
 <h3>Orders:</h3>
-<div *ngFor="let item of orders">
-  {{item.id}} -- {{item.description}}
-</div>
+<table>
+  <tbody>
+  <tr>
+    <th>ID</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <div *ngFor="let item of orders">
+      <th>{{item.id}}</th>
+      <th>{{item.description}}</th>
+    </div>
+  </tr>
+  </tbody>
+</table>
 
 <h3>Mechanics:</h3>
-<div *ngFor="let item of mechanics">
-  {{item.id}} -- {{item.name}}
-</div>
+<table>
+  <tbody>
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+  </tr>
+  <tr>
+    <div *ngFor="let item of mechanics">
+      <th>{{item.id}}</th>
+      <th>{{item.name}}</th>
+    </div>
+  </tr>
+  </tbody>
+</table>
 
 <h3>Payment Statuses:</h3>
 <div *ngFor="let item of paymentStatuses">

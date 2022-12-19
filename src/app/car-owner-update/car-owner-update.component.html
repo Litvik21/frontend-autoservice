@@ -17,11 +17,37 @@
 </div>
 
 <h3>Cars:</h3>
-<div *ngFor="let item of cars">
-  {{item.id}} -- {{item.brand}} -- {{item.model}} -- {{item.number}}
-</div>
+<table>
+  <tbody>
+  <tr>
+    <th>ID</th>
+    <th>Brand</th>
+    <th>Model</th>
+    <th>VIN number</th>
+  </tr>
+  <tr>
+    <div *ngFor="let item of cars">
+      <th>{{item.id}}</th>
+      <th>{{item.brand}}</th>
+      <th>{{item.model}}</th>
+      <th>{{item.number}}</th>
+    </div>
+  </tr>
+  </tbody>
+</table>
 
 <h3>Orders:</h3>
-<div *ngFor="let item of orders">
-  {{item.id}} -- {{item.description}}
-</div>
+<table>
+  <tbody>
+  <tr>
+    <th>ID</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <div *ngFor="let item of orders">
+      <th>{{item.id}}</th>
+      <th>{{item.description}}</th>
+    </div>
+  </tr>
+  </tbody>
+</table>

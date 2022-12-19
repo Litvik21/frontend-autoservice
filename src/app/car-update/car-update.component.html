@@ -31,6 +31,16 @@
 </div>
 
 <h3>Owners:</h3>
-<div *ngFor="let item of owners">
-  {{item.id}} -- {{<div *ngFor="let car of item.cars"> {{car.number}} </div> }}
-</div>
+<table>
+  <tbody>
+  <tr>
+    <th>ID</th>
+  </tr>
+  <tr>
+    <div *ngFor="let item of owners">
+      <th>{{item.id}}</th>
+    </div>
+  </tr>
+  </tbody>
+</table>
+

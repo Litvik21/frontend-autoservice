@@ -7,6 +7,17 @@
 </div>
 
 <h3>Orders:</h3>
-<div *ngFor="let item of orders">
-  {{item.id}} -- {{item.description}}
-</div>
+<table>
+  <tbody>
+  <tr>
+    <th>ID</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <div *ngFor="let item of orders">
+      <th>{{item.id}}</th>
+      <th>{{item.description}}</th>
+    </div>
+  </tr>
+  </tbody>
+</table>
