@@ -4,7 +4,7 @@ import {ActivatedRoute} from "@angular/router";
 import {TaskService} from "../service/task.service";
 import {Location} from "@angular/common";
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {PaymentStatus} from "../model/paymentStatus";
+import {PaymentStatus, PaymentStatusMapping} from "../model/paymentStatus";
 
 @Component({
   selector: 'app-task-update-status',
@@ -14,7 +14,8 @@ import {PaymentStatus} from "../model/paymentStatus";
 export class TaskUpdateStatusComponent implements OnInit {
   statusForm!: FormGroup;
 
-  statuses: string[] = [];
+  statuses = Object.values(PaymentStatus);
+  PaymentStatusMapping = PaymentStatusMapping;
   task!: Task;
   status!: string;
 
@@ -27,9 +28,6 @@ export class TaskUpdateStatusComponent implements OnInit {
 
   ngOnInit(): void {
     this.getTask();
-    for (let i = 0; i < 2; i++) {
-      this.statuses.push(PaymentStatus[i].toString());
-    }
     this.statusForm = this.fb.group({
       status: [null]
     })

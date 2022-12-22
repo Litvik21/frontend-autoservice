@@ -4,11 +4,13 @@
 
   <form [formGroup]="statusForm" (ngSubmit)="submitStatus()">
 
-    <label>Select Status</label>
     <p>
-      <select formControlName="status">
-        <option [ngValue]="null" disabled>Select Status</option>
-        <option *ngFor="let status of statuses" [ngValue]="status">{{status}}</option>
+      <label>Select status</label>
+      <select>
+        <option *ngFor="let status of statuses"
+                [value]="status">
+          {{StatusMapping[status]}}
+        </option>
       </select>
 
       <button type="submit">Submit</button>

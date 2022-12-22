@@ -15,39 +15,3 @@
   <button (click)="goBack()">go back</button>
   <button (click)="save()">save</button>
 </div>
-
-<h3>Cars:</h3>
-<table>
-  <tbody>
-  <tr>
-    <th>ID</th>
-    <th>Brand</th>
-    <th>Model</th>
-    <th>VIN number</th>
-  </tr>
-  <tr>
-    <div *ngFor="let item of cars">
-      <th>{{item.id}}</th>
-      <th>{{item.brand}}</th>
-      <th>{{item.model}}</th>
-      <th>{{item.number}}</th>
-    </div>
-  </tr>
-  </tbody>
-</table>
-
-<h3>Orders:</h3>
-<table>
-  <tbody>
-  <tr>
-    <th>ID</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <div *ngFor="let item of orders">
-      <th>{{item.id}}</th>
-      <th>{{item.description}}</th>
-    </div>
-  </tr>
-  </tbody>
-</table>

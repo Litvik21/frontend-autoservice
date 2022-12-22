@@ -29,18 +29,3 @@
   <button (click)="goBack()">go back</button>
   <button (click)="save()">save</button>
 </div>
-
-<h3>Owners:</h3>
-<table>
-  <tbody>
-  <tr>
-    <th>ID</th>
-  </tr>
-  <tr>
-    <div *ngFor="let item of owners">
-      <th>{{item.id}}</th>
-    </div>
-  </tr>
-  </tbody>
-</table>
-

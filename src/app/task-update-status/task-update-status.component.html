@@ -5,9 +5,11 @@
 
     <label>Select Status</label>
     <p>
-      <select formControlName="status">
-        <option [ngValue]="null" disabled>Select Status</option>
-        <option *ngFor="let status of statuses" [ngValue]="status">{{status}}</option>
+      <select>
+        <option *ngFor="let status of statuses"
+                [value]="status">
+          {{PaymentStatusMapping[status]}}
+        </option>
       </select>
 
       <button type="submit">Submit</button>

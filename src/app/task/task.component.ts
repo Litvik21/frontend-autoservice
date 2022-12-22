@@ -5,8 +5,8 @@ import {Mechanic} from "../model/mechanic";
 import {OrderService} from "../service/order.service";
 import {MechanicService} from "../service/mechanic.service";
 import {Order} from "../model/order";
-import {PaymentStatus} from "../model/paymentStatus";
-import {TypeOfTask} from "../model/typeOfTask";
+import {PaymentStatus, PaymentStatusMapping} from "../model/paymentStatus";
+import {TypeOfTask, TypeOfTaskMapping} from "../model/typeOfTask";
 import {FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({
@@ -17,19 +17,22 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 export class TaskComponent implements OnInit {
   orderForm!: FormGroup;
   mechanicForm!: FormGroup;
+  paymentStatusForm!: FormGroup;
+  typeOfTaskForm!: FormGroup;
 
   tasks: Task[] = [];
   orders: Order[] = [];
   mechanics: Mechanic[] = [];
-  paymentStatuses: string[] = [];
-  types: string[] = [];
   newMechanic!: Mechanic;
   newOrder!: Order;
   paymentStatus!: PaymentStatus;
+  statuses = Object.values(PaymentStatus);
+  PaymentStatusMapping = PaymentStatusMapping;
+  type!: TypeOfTask;
+  types = Object.values(TypeOfTask);
+  TypeOfTaskMapping = TypeOfTaskMapping;
 
-  typeID = 0;
   price = 0;
-  statusID = 0;
 
   constructor(private taskService: TaskService,
               private orderService: OrderService,
@@ -40,18 +43,18 @@ export class TaskComponent implements OnInit {
     this.getOrders();
     this.getMechanics();
     this.getTasks();
+    this.paymentStatusForm = this.fb.group({
+      paymentStatus: [null]
+    })
+    this.typeOfTaskForm = this.fb.group({
+      typeOfTask: [null]
+    })
     this.mechanicForm = this.fb.group({
       mechanic: [null]
     })
     this.orderForm = this.fb.group({
       order: [null]
     })
-    for (let i = 0; i < 2; i++) {
-      this.paymentStatuses.push(PaymentStatus[i].toString());
-    }
-    for (let i = 0; i < 4; i++) {
-      this.types.push(TypeOfTask[i].toString());
-    }
   }
 
   getOrders(): void {
@@ -69,6 +72,14 @@ export class TaskComponent implements OnInit {
       .subscribe(tasks => this.tasks = tasks);
   }
 
+  submitPaymentStatus() {
+    this.paymentStatus = this.paymentStatusForm.value;
+  }
+
+  submitTypeOfTask() {
+    this.type = this.typeOfTaskForm.value;
+  }
+
   submitMechanic() {
     this.newMechanic = this.mechanics.find(m => m.id == this.mechanicForm.value)!
   }
@@ -80,12 +91,10 @@ export class TaskComponent implements OnInit {
   add(): void {
     let id = Math.max.apply(Math, this.tasks.map(function (o) {return o.id!;} ));
 
-    this.taskService.addTask({id: id + 1, typeOfTask: TypeOfTask[this.typeID], price: this.price,
-      order: this.newOrder, mechanic: this.newMechanic, paymentStatus: PaymentStatus[this.statusID]}as unknown as Task)
+    this.taskService.addTask({id: id + 1, typeOfTask: this.type, price: this.price,
+      order: this.newOrder, mechanic: this.newMechanic, paymentStatus: this.paymentStatus} as Task)
       .subscribe(task => {this.tasks.push(task)});
 
-    this.typeID = 0;
-    this.statusID = 0;
     this.price = 0;
   }
 }

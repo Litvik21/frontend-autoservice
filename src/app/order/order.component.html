@@ -49,80 +49,12 @@
 
 </form>
 <p>
-  <label>Date finished:</label>
-  <input [(ngModel)]="dateFinished">
+  <label>Date Finished: </label>
+  <mat-form-field appearance="fill">
+    <mat-label>Choose a date</mat-label>
+    <input matInput [matDatepicker]="picker">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
 </p>
 <button (click)="add()">Add</button>
-
-
-<h3>Orders:</h3>
-<table>
-  <tbody>
-  <tr>
-    <th>ID</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <div *ngFor="let item of orders">
-      <th>{{item.id}}</th>
-      <th>{{item.description}}</th>
-    </div>
-  </tr>
-  </tbody>
-</table>
-
-<h3>Cars:</h3>
-<table>
-  <tbody>
-  <tr>
-    <th>ID</th>
-    <th>Brand</th>
-    <th>Model</th>
-    <th>VIN number</th>
-  </tr>
-  <tr>
-    <div *ngFor="let item of cars">
-      <th>{{item.id}}</th>
-      <th>{{item.brand}}</th>
-      <th>{{item.model}}</th>
-      <th>{{item.number}}</th>
-    </div>
-  </tr>
-  </tbody>
-</table>
-
-<h3>Products:</h3>
-<table>
-  <tbody>
-  <tr>
-    <th>ID</th>
-    <th>Title</th>
-    <th>Price</th>
-  </tr>
-  <tr>
-    <div *ngFor="let item of products">
-      <th>{{item.id}}</th>
-      <th>{{item.title}}</th>
-      <th>{{item.price}}</th>
-    </div>
-  </tr>
-  </tbody>
-</table>
-
-<h3>Tasks:</h3>
-<table>
-  <tbody>
-  <tr>
-    <th>ID</th>
-    <th>Mechanic</th>
-    <th>Price</th>
-  </tr>
-  <tr>
-    <div *ngFor="let item of tasks">
-      <th>{{item.id}}</th>
-      <th>{{item.mechanic}}</th>
-      <th>{{item.price}}</th>
-    </div>
-  </tr>
-  </tbody>
-</table>

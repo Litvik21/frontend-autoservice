@@ -1,4 +1,9 @@
 export enum PaymentStatus {
-  Paid,
-  Not_Paid,
+  Paid = "Paid",
+  Not_Paid = "NotPaid",
+}
+
+export const PaymentStatusMapping = {
+  [PaymentStatus.Paid]: "Paid",
+  [PaymentStatus.Not_Paid]: "Not Paid",
 }

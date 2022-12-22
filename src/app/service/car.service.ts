@@ -5,15 +5,14 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { Car } from '../model/car';
-import { MessageService } from './message.service';
+import {environment} from "../../environments/environment";
 
 @Injectable({ providedIn: 'root' })
 export class CarService {
-  private carsUrl = 'http://localhost:6868/cars';
+  private carsUrl = environment.urlPath + '/cars';
 
   constructor(
-    private http: HttpClient,
-    private messageService: MessageService) { }
+    private http: HttpClient) { }
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -22,7 +21,6 @@ export class CarService {
   getCars(): Observable<Car[]> {
     return this.http.get<Car[]>(this.carsUrl)
       .pipe(
-        tap(_ => this.log('fetched cars')),
         catchError(this.handleError<Car[]>('getCars', []))
       );
   }
@@ -30,7 +28,6 @@ export class CarService {
   getCar(id: number): Observable<Car> {
     const url = `${this.carsUrl}/${id}`;
     return this.http.get<Car>(url).pipe(
-      tap(_ => this.log(`fetched car id=${id}`)),
       catchError(this.handleError<Car>(`getCar id=${id}`))
     );
   }
@@ -38,14 +35,12 @@ export class CarService {
   updateCar(car: Car): Observable<any> {
     const url = `${this.carsUrl}/${car.id}`
     return this.http.put(url, car, this.httpOptions).pipe(
-      tap(_ => this.log(`updated car id=${car.id}`)),
       catchError(this.handleError<any>('updateCar'))
     );
   }
 
   addCar(car: Car): Observable<Car> {
     return this.http.post<Car>(this.carsUrl, car, this.httpOptions).pipe(
-      tap((newCar: Car) => this.log(`added car w/ id=${newCar.id}`)),
       catchError(this.handleError<Car>('addCar'))
     );
   }
@@ -55,13 +50,7 @@ export class CarService {
 
       console.error(error);
 
-      this.log(`${operation} failed: ${error.message}`);
-
       return of(result as T);
     };
-  }
-
-  private log(message: string) {
-    this.messageService.add(`CarService: ${message}`);
   }
 }

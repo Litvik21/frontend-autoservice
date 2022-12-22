@@ -29,6 +29,7 @@ export class OrderComponent implements OnInit {
 
   description = "";
   dateFinished = new Date;
+  picker = new Date;
 
 
   constructor(private orderService: OrderService,

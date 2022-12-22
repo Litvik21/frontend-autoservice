@@ -3,7 +3,7 @@ import {Order} from "../model/order";
 import {ActivatedRoute} from "@angular/router";
 import {OrderService} from "../service/order.service";
 import {Location} from "@angular/common";
-import {Status} from "../model/status";
+import {Status, StatusMapping} from "../model/status";
 import {FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({
@@ -15,8 +15,9 @@ export class OrderUpdateStatusComponent implements OnInit {
   statusForm!: FormGroup;
 
   order!: Order;
-  status!: string;
-  statuses: string[] = [];
+  status!: Status;
+  statuses = Object.values(Status);
+  StatusMapping = StatusMapping;
 
   constructor(
     private route: ActivatedRoute,
@@ -27,9 +28,6 @@ export class OrderUpdateStatusComponent implements OnInit {
 
   ngOnInit(): void {
     this.getOrder();
-    for (let i = 0; i < 5; i++) {
-      this.statuses.push(Status[i].toString());
-    }
     this.statusForm = this.fb.group({
       status: [null]
     })

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ProductComponent } from './product/product.component';
@@ -12,7 +11,6 @@ import { OrderComponent } from './order/order.component'
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { ProductUpdateComponent } from './product-update/product-update.component';
 import { TaskUpdateComponent } from './task-update/task-update.component';
-import { MessagesComponent } from './messages/messages.component';
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import { CarUpdateComponent } from './car-update/car-update.component';
 import { CarOwnerUpdateComponent } from './car-owner-update/car-owner-update.component';
@@ -25,6 +23,12 @@ import { OrderAddProductComponent } from './order-add-product/order-add-product.
 import { OrderUpdateStatusComponent } from './order-update-status/order-update-status.component';
 import { OrderTotalPriceComponent } from './order-total-price/order-total-price.component';
 import { TaskUpdateStatusComponent } from './task-update-status/task-update-status.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {DateAdapter, MAT_DATE_FORMATS} from "@angular/material/core";
+import {AppDateAdapter, APP_DATE_FORMATS} from "./adapter/date.adapter";
 
 @NgModule({
   declarations: [
@@ -37,7 +41,6 @@ import { TaskUpdateStatusComponent } from './task-update-status/task-update-stat
     OrderComponent,
     ProductUpdateComponent,
     TaskUpdateComponent,
-    MessagesComponent,
     CarUpdateComponent,
     CarOwnerUpdateComponent,
     MechanicUpdateComponent,
@@ -55,9 +58,16 @@ import { TaskUpdateStatusComponent } from './task-update-status/task-update-stat
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule
   ],
-  providers: [],
+  providers: [
+    {provide: DateAdapter, useClass: AppDateAdapter},
+    {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

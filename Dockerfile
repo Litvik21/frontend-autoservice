@@ -1,4 +1,4 @@
-FROM node:12.18.3-stretch-slim
+FROM node:19.3.0
 WORKDIR /usr/src/app
 COPY package.json .
 RUN npm i -g @angular/cli@~10.0.4
